@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Happy Birthday 🎉</title>
+
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    background: linear-gradient(270deg, #ff0080, #7928ca, #00c6ff);
+    background-size: 600% 600%;
+    animation: gradientBG 10s ease infinite;
+    color: white;
+}
+
+/* animasi background */
+@keyframes gradientBG {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
+.content {
+    z-index: 2;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    animation: fadeIn 2s ease;
+}
+
+/* RESPONSIVE TEXT */
+h1 {
+    font-size: 8vw;
+    animation: pop 1s ease;
+}
+
+p {
+    font-size: 4vw;
+}
+
+/* BUTTON */
+button {
+    margin-top: 20px;
+    padding: 12px 20px;
+    font-size: 4vw;
+    background: yellow;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+/* GAMBAR */
+.foto {
+    width: 40vw;
+    height: 40vw;
+    max-width: 160px;
+    max-height: 160px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid white;
+    margin-bottom: 20px;
+    animation: pop 1s ease;
+}
+
+/* canvas */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+@keyframes pop {
+    0% {transform: scale(0);}
+    100% {transform: scale(1);}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="content">
+    <img src="foto.jpg" class="foto">
+
+    <h1>🎂 HAPPY BIRTHDAY 🎉</h1>
+    <p>Semoga panjang umur, sehat selalu, dan bahagia! 🥳</p>
+
+    <button onclick="surprise()">Klik Surprise 🎁</button>
+</div>
+
+<script>
+function surprise() {
+    alert("Selamat ulang tahun! 🎉🥳🎂");
+}
+
+// CONFETTI
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+resizeCanvas();
+
+let confetti = [];
+
+for (let i = 0; i < 200; i++) {
+    confetti.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 6 + 2,
+        d: Math.random() * 50,
+        color: "hsl(" + Math.random() * 360 + ",100%,50%)"
+    });
+}
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    confetti.forEach((c, i) => {
+        ctx.fillStyle = c.color;
+        ctx.fillRect(c.x, c.y, c.r, c.r);
+    });
+
+    update();
+}
+
+function update() {
+    confetti.forEach((c, i) => {
+        c.y += 2;
+        c.x += Math.sin(c.d);
+
+        if (c.y > canvas.height) {
+            confetti[i] = {
+                ...c,
+                y: 0,
+                x: Math.random() * canvas.width
+            };
+        }
+    });
+}
+
+setInterval(draw, 20);
+
+window.addEventListener("resize", resizeCanvas);
+</script>
+
+</body>
+</html>

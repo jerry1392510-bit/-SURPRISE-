@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday 🎉</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: linear-gradient(270deg, #ff0080, #7928ca, #00c6ff);
+    background-size: 600% 600%;
+    animation: gradientBG 10s ease infinite;
+    color: white;
+}
+
+/* animasi background */
+@keyframes gradientBG {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
+.container {
+    margin-top: 100px;
+}
+
+/* JUDUL */
+h1 {
+    font-size: 50px;
+}
+
+/* DESKRIPSI */
+p {
+    font-size: 20px;
+}
+
+/* BUTTON */
+button {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background: yellow;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* GAMBAR */
+.foto {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid white;
+    margin-bottom: 20px;
+    box-shadow: 0 0 20px white;
+}
+
+/* CANVAS CONFETTI */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="container">
+    <img src="foto.jpg" class="foto" onerror="alert('Gambar tidak ditemukan!')">
+
+    <h1>🎂 HAPPY BIRTHDAY 🎉</h1>
+    <p>Semoga panjang umur, sehat selalu, dan bahagia! 🥳</p>
+
+    <button onclick="surprise()">Klik Surprise 🎁</button>
+</div>
+
+<script>
+function surprise() {
+    alert("Selamat ulang tahun! 🎉🥳🎂");
+}
+
+// CONFETTI
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let confetti = [];
+
+for (let i = 0; i < 200; i++) {
+    confetti.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 6 + 2,
+        d: Math.random() * 50,
+        color: "hsl(" + Math.random() * 360 + ",100%,50%)"
+    });
+}
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    confetti.forEach((c, i) => {
+        ctx.fillStyle = c.color;
+        ctx.fillRect(c.x, c.y, c.r, c.r);
+    });
+
+    update();
+}
+
+function update() {
+    confetti.forEach((c, i) => {
+        c.y += 2;
+        c.x += Math.sin(c.d);
+
+        if (c.y > canvas.height) {
+            confetti[i] = {
+                ...c,
+                y: 0,
+                x: Math.random() * canvas.width
+            };
+        }
+    });
+}
+
+setInterval(draw, 20);
+
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+</script>
+
+</body>
+</html>
