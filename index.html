@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <title>Happy Birthday 🎉</title>
 
@@ -14,40 +15,53 @@ body {
     animation: gradientBG 10s ease infinite;
     color: white;
 }
-
-/* animasi background */
 @keyframes gradientBG {
     0% {background-position: 0% 50%;}
     50% {background-position: 100% 50%;}
     100% {background-position: 0% 50%;}
 }
-
 .container {
     margin-top: 100px;
 }
-
-/* JUDUL */
 h1 {
     font-size: 50px;
 }
-
-/* DESKRIPSI */
 p {
     font-size: 20px;
 }
-
-/* BUTTON */
 button {
-    margin-top: 20px;
-    padding: 12px 20px;
-    background: yellow;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(45deg, #ff4b7d, #ff85a2);
+    color: white;
     border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
+    border-radius: 25px;
+    padding: 12px 25px;
+    font-weight: 500;
+    transition: 0.3s;
 }
-
-/* GAMBAR */
+button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px #ff4b7d;
+}
+.popup-content p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    color: #fff;
+    line-height: 1.8;
+    text-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+.popup-content h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 45px;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(255, 182, 193, 0.8);
+}
+.popup-content h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 26px;
+    color: #ffd6e0;
+    margin-bottom: 15px;
+}
 .foto {
     width: 200px;
     height: 200px;
@@ -56,42 +70,177 @@ button {
     border: 5px solid white;
     margin-bottom: 20px;
     box-shadow: 0 0 20px white;
+    transition: 0.4s;
 }
-
-/* CANVAS CONFETTI */
+.romantic-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, #ff9a9e, #fad0c4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.5s;
+}
+.popup-content {
+    text-align: center;
+    background: rgba(255,255,255,0.15);
+    padding: 40px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    color: white;
+    max-width: 500px;
+    animation: popUp 0.6s ease;
+    box-shadow: 0 0 30px rgba(255,255,255,0.5);
+}
+.popup-content h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+.popup-content h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+.popup-content p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+.popup-content button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    background: white;
+    color: #ff4b7d;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+@keyframes popUp {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
 canvas {
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+.popup-content {
+    position: relative;
+    z-index: 2;
+}
+.romantic-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.6);
+    z-index: 5;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.5s;
+}
+.romantic-popup.show {
+    opacity: 1;
+    pointer-events: all;
+}
+#loveCanvasPopup {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+.popup-content {
+    position: relative;
+    z-index: 2;
+    background: rgba(255,255,255,0.2);
+    padding: 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    color: white;
 }
 </style>
 </head>
 
 <body>
-
+<audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mp3">
+</audio>
 <canvas id="confetti"></canvas>
+<canvas id="loveCanvas"></canvas>
 
 <div class="container">
     <img src="foto.jpg" class="foto" onerror="alert('Gambar tidak ditemukan!')">
-
-    <h1>🎂 HAPPY BIRTHDAY 🎉</h1>
-    <p>Semoga panjang umur, sehat selalu, dan bahagia! 🥳</p>
-
+    <h1>🎂 ~~HAPPY BIRTHDAY AYANG~~ 🎉</h1>
     <button onclick="surprise()">Klik Surprise 🎁</button>
+    <h3>💞✨Surpriseeeeeeee, hehehe keren kann ini wa buat sepenuh hati waa lohhh😆✨</h3>
+    <h3>🌺walau gak sempurn dan banyak kekurangan tapiii...🥺👉👈</h3>
+    <h3> 💗 semogaa le sukaak yaaa😚💞</h3>
+</div>
+
+<div id="romanticPopup" class="romantic-popup">
+
+    <canvas id="loveCanvasPopup"></canvas>
+
+    <div class="popup-content">
+        <h1>💖 Happy Birthday 💖</h1>
+        <h2> ❤️Eva Apriliani❤️</h2>
+        <p>
+            🌹Habede 22th Birthday ayangg, semogaaa sehat selalu dan happy selalu yaaa🌸<br>
+            ✨Tetap jadi my favorite person yaaa💕<br><br>
+            💖Hari ini spesial, because you are special✨<br><br>
+            💓  Love you ayyy😝🫶
+        </p>
+
+        <button onclick="closePopup()">Tutup 💌</button>
+    </div>
 </div>
 
 <script>
-function surprise() {
-    alert("Selamat ulang tahun! 🎉🥳🎂");
-}
 
-// CONFETTI
+function surprise() {
+    const popup = document.getElementById("romanticPopup");
+    popup.classList.add("show");
+
+    setTimeout(() => {
+        startLoveRain();
+    }, 100);
+
+    autoFirework = true;
+    launchFireworksLoop();
+    const music = document.getElementById("bgMusic");
+    music.play();music.volume = 1;
+}
+function closePopup() {
+    document.getElementById("romanticPopup").classList.remove("show");
+}
 const canvas = document.getElementById("confetti");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resizeCanvas();
 let confetti = [];
 
 for (let i = 0; i < 200; i++) {
@@ -103,40 +252,139 @@ for (let i = 0; i < 200; i++) {
         color: "hsl(" + Math.random() * 360 + ",100%,50%)"
     });
 }
+let fireworks = [];
+let autoFirework = false;
 
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    confetti.forEach((c, i) => {
-        ctx.fillStyle = c.color;
-        ctx.fillRect(c.x, c.y, c.r, c.r);
-    });
-
-    update();
+function createExplosion(x, y) {
+    for (let i = 0; i < 900; i++) {
+        let power = Math.random() * 60 + 40; //
+        
+        fireworks.push({
+            x: x,
+            y: y,
+            angle: Math.random() * Math.PI * 2,
+            speed: Math.random() * 4 + 1,
+            friction: 0.97,
+            gravity: 0.05,
+            alpha: 1,
+            decay: Math.random() * 0.02 + 0.01,
+            size: Math.random() * 3 + 2,
+            color: "hsl(" + Math.random() * 360 + ",100%,60%)"
+            
+        });
+    }
 }
 
-function update() {
-    confetti.forEach((c, i) => {
+function launchFireworksLoop() {
+    if (!autoFirework) return;
+
+    createExplosion(
+        Math.random() * canvas.width,
+        Math.random() * canvas.height 
+    );
+
+    setTimeout(launchFireworksLoop, 1000);
+}
+
+function drawFireworks() {
+    for (let i = fireworks.length - 1; i >= 0; i--) {
+        let f = fireworks[i];
+
+        f.x += Math.cos(f.angle) * f.speed;
+        f.y += Math.sin(f.angle) * f.speed + f.gravity;
+
+        f.speed *= f.friction;
+        f.alpha -= f.decay;
+
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, f.size, 0, Math.PI * 2);
+        ctx.fillStyle = f.color;
+        ctx.globalAlpha = f.alpha;
+        ctx.fill();
+        if (f.alpha <= 0) {
+            fireworks.splice(i, 1);
+        }
+    }
+
+    ctx.globalAlpha = 1;
+}
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    confetti.forEach(c => {
+        ctx.fillStyle = c.color;
+        ctx.fillRect(c.x, c.y, c.r, c.r);
+
         c.y += 2;
         c.x += Math.sin(c.d);
 
         if (c.y > canvas.height) {
-            confetti[i] = {
-                ...c,
-                y: 0,
-                x: Math.random() * canvas.width
-            };
+            c.y = 0;
+            c.x = Math.random() * canvas.width;
         }
     });
+    drawFireworks();
+    requestAnimationFrame(animate);
 }
 
-setInterval(draw, 20);
-
-window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-});
+animate();
+window.addEventListener("resize", resizeCanvas);
 </script>
+<script>
+const loveCanvas = document.getElementById("loveCanvasPopup");
+const loveCtx = loveCanvas.getContext("2d");
 
+let hearts = [];
+let sparkles = [];
+function resizeLoveCanvas() {
+    loveCanvas.width = loveCanvas.offsetWidth;
+    loveCanvas.height = loveCanvas.offsetHeight;
+}
+function initHearts() {
+    hearts = [];
+    for (let i = 0; i < 40; i++) {
+        hearts.push({
+            x: Math.random() * loveCanvas.width,
+            y: Math.random() * loveCanvas.height,
+            size: Math.random() * 10 + 8,
+            speedY: Math.random() * 1.5 + 1,
+            speedX: Math.random() * 2 - 1,
+            wave: Math.random() * 50
+        });
+    }
+}
+function drawHeart(x, y, size) {
+    loveCtx.fillStyle = "#ff4b7d";
+    loveCtx.beginPath();
+    loveCtx.moveTo(x, y);
+    loveCtx.bezierCurveTo(x, y - size, x - size, y - size, x - size, y);
+    loveCtx.bezierCurveTo(x - size, y + size, x, y + size * 1.5, x, y + size * 2);
+    loveCtx.bezierCurveTo(x, y + size * 1.5, x + size, y + size, x + size, y);
+    loveCtx.bezierCurveTo(x + size, y - size, x, y - size, x, y);
+    loveCtx.fill();
+}
+function animateLove() {
+    loveCtx.clearRect(0, 0, loveCanvas.width, loveCanvas.height);
+
+    for (let i = 0; i < hearts.length; i++) {
+        let h = hearts[i];
+        drawHeart(h.x, h.y, h.size);
+        h.y += h.speedY;
+        h.x += Math.sin(h.wave) * 0.5;
+        h.wave += 0.1;
+        if (h.y > loveCanvas.height) {
+            h.y = -10;
+            h.x = Math.random() * loveCanvas.width;
+        }
+    }
+    requestAnimationFrame(animateLove);
+}
+
+animateLove();
+function startLoveRain() {
+    resizeLoveCanvas();
+    initHearts();
+}
+window.addEventListener("resize", resizeLoveCanvas);
+</script>
 </body>
 </html>
